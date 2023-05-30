@@ -29,9 +29,8 @@ const removeNote = (title) => {
   const notes = loadNotes()
   // here i filter the notes array to filter out all titles that dont match with the specified title, thereby removing the specified note title
 
-  const filteredNotes = notes.filter(function (note) {
-    return note.title !== title
-  })
+  const filteredNotes = notes.filter( (note) => (note.title !== title
+  ))
 
   // here i gave a condition stating that if the note array > filtered one, pass a successfull message else pass an error message using chalk
 
@@ -44,6 +43,28 @@ const removeNote = (title) => {
     console.log(chalk.red.inverse('No Note found'))
   }
 
+}
+
+const listNotes = () => {
+  const notes = loadNotes()
+  console.log(chalk.blue.inverse('All Available Notes'))
+  notes.forEach(note => {
+    console.log('Title: '+ note.title + ' Body: ' + note.body);
+  });
+  
+}
+
+const readNotes = (title) => {
+  const notes = loadNotes()
+  const note = notes.find((note) => note.title === title)
+
+  if (note) {
+    console.log(chalk.inverse(note.title))
+    console.log(note.body)
+  }
+  else {
+    console.log(chalk.red.inverse('Note not found!'))
+  }
 }
 
 
@@ -64,7 +85,7 @@ const loadNotes = () => {
   }
 
 }
-export { getNotes, addNote, removeNote }
+export { getNotes, addNote, removeNote, listNotes, readNotes }
 
 // module.exports = {
 //   getNotes: getNotes,
