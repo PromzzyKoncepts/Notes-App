@@ -8,7 +8,7 @@
 
 
 // const notes = require('./notes.js');
-import { addNote, removeNote } from "./notes.js"
+import { addNote, removeNote, listNotes, readNotes } from "./notes.js"
 import yargs from "yargs"
 import chalk from "chalk"
 
@@ -28,7 +28,7 @@ yargs.command({
       type: 'string'
     }
   },
-  handler: function (argv) {
+  handler: (argv) => {
     addNote(argv.title, argv.body)
   }
 })
@@ -44,7 +44,7 @@ yargs.command({
       type: 'string'
     }
   },
-  handler: function (argv) {
+  handler: (argv) => {
     removeNote(argv.title)
   }
 })
@@ -53,8 +53,20 @@ yargs.command({
 yargs.command({
   command: 'list',
   describe: 'list all notes',
-  handler: function () {
-    console.log('listing out all notes')
+  builder: {
+    title: {
+      describe: "Note title",
+      demandOption: false,
+      type: 'string'
+    },
+    body: {
+      describe: 'Body of the note',
+      demandOption: false,
+      type: 'string'
+    }
+  },
+  handler: (argv) => {
+    listNotes(argv.title, argv.body)
   }
 })
 
@@ -62,8 +74,20 @@ yargs.command({
 yargs.command({
   command: 'read',
   describe: 'read a note',
-  handler: function () {
-    console.log('reading a note')
+  builder: {
+    title: {
+      describe: "Note title",
+      demandOption: true,
+      type: 'string'
+    },
+    body: {
+      describe: 'Body of the note',
+      demandOption: false,
+      type: 'string'
+    }
+  },
+  handler: (argv) => {
+    readNotes(argv.title, argv.body)
   }
 })
 
